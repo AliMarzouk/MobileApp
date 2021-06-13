@@ -19,19 +19,19 @@ export class AuthService {
   ) {}
 
   async createAccessToken(userId: string) {
-    return await this.jwtService.signAsync({ userId });
+    return await this.jwtService.signAsync({ userId },{expiresIn: 60});
   }
 
-  async createRefreshToken(req: Request, userId: string) {
-    const refreshToken = new this.refreshTokenModel({
-      userId,
-      refreshToken: v4(),
-      ip: this.getIp(req),
-      browser: this.getBrowserInfo(req),
-    });
-    await refreshToken.save();
-    return refreshToken.refreshToken;
-  }
+  // async createRefreshToken(req: Request, userId: string) {
+  //   const refreshToken = new this.refreshTokenModel({
+  //     userId,
+  //     refreshToken: v4(),
+  //     ip: this.getIp(req),
+  //     browser: this.getBrowserInfo(req),
+  //   });
+  //   await refreshToken.save();
+  //   return refreshToken.refreshToken;
+  // }
 
   async findRefreshToken(token: string) {
     const refreshToken = await this.refreshTokenModel.findOne({

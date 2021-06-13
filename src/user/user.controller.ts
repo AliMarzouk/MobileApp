@@ -17,7 +17,10 @@ import { RefreshAccessTokenDto } from './dto/refresh-access-token.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {LoginSocialDto} from "./dto/login-social.dto";
+import {ApiBody, ApiTags} from "@nestjs/swagger";
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -26,6 +29,13 @@ export class UserController {
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
+  }
+
+  @Post('/:socialId')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBody({type: LoginSocialDto})
+  async loginSocial(@Body() login: LoginSocialDto, @Req() req: Request) {
+    return await this.userService.loginSocial(req, login);
   }
 
   @Get('list')

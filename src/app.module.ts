@@ -8,6 +8,7 @@ import {ConfigModule} from '@nestjs/config';
 import {ClubModule} from "./club/club.module";
 import { EventsModule } from './events/events.module';
 import { FilesModule } from './files/files.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { FilesModule } from './files/files.module';
         ClubModule,
         EventsModule,
         FilesModule,
+        NotificationModule,
     ],
     controllers: [AppController],
     providers: [AppService],
